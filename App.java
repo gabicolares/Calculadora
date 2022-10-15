@@ -1,12 +1,12 @@
 public class App {
     public static void main(String args[]) {
-        StackLinkedList<Integer> test = new StackLinkedList<>();
+        StackLinkedList<String> test = new StackLinkedList<>();
 
-        test.push(10);
-        test.push(2);
-        test.push(9);
-        test.push(22);
-        test.push(3);
+        test.push("Primeiro Elemento Adicionado");
+        test.push("Segundo Elemento Adicionado");
+        test.push("Terceiro Elemento Adicionado");
+        test.push("Quarto Elemento Adicionado");
+        test.push("Quinto Elemento Adicionado");
 
         System.out.println(test.pop());
         System.out.println(test.pop());
