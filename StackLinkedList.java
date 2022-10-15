@@ -47,8 +47,8 @@ public class StackLinkedList<E> {
     }
 
     public E top() {
-        if (count == 0) // se a pilha esta vazia
-            throw new EmptyStackException(); // erro
+        if (count == 0)
+            throw new EmptyStackException();
 
         return head.element;
     }
@@ -67,18 +67,4 @@ public class StackLinkedList<E> {
         count = 0;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder s = new StringBuilder();
-
-        Node<E> aux = head;
-
-        while (aux != null) {
-            s.append(aux.element.toString());
-            s.append("\n");
-            aux = aux.next;
-        }
-
-        return s.toString();
-    }    
 }
