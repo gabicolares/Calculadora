@@ -11,33 +11,34 @@ public class Calculadora {
         int contadorColchetes = 0;
         String[] separada = expressao.split(" ");
 
-        while (true) {
             for (int i = 0; i < separada.length; i++) {
-                if (separada[i] == "(") {
+                if (separada[i].equals("(")) {
                     contadorParenteses++;
                 }
-                if (separada[i] == ")") {
+                
+                if (separada[i].equals(")")) {
                     contadorParenteses--;
                 }
 
-                if (separada[i] == "[") {
+                if (separada[i].equals("[")) {
                     contadorColchetes++;
                 }
 
-                if (separada[i] == "]") {
+                if (separada[i].equals("]")) {
                     contadorColchetes++;
                 }
 
-                if (separada[i] == "{") {
+                if (separada[i].equals("{")) {
                     contadorChaves++;
                 }
 
-                if (separada[i] == "}") {
+                if (separada[i].equals("}")) {
                     contadorChaves++;
                 }
             }
 
-            if (contadorParenteses == 0) {
+
+            if (contadorParenteses == 0 && contadorChaves == 0 && contadorColchetes == 0) {
                 return true;
             }
 
@@ -51,9 +52,6 @@ public class Calculadora {
                 return false;
             }
 
-            if (contadorColchetes == 0) {
-                return true;
-            }
 
             else if (contadorColchetes < 0) {
                 System.out.printf("Existe(m) %d fechamento(s) de colchetes sem abertura", contadorColchetes*-1);
@@ -63,10 +61,6 @@ public class Calculadora {
             else if (contadorColchetes > 0) {
                 System.out.printf("Existe(m) %d abertura(s) de colchetes sem fechamento", contadorColchetes);
                 return false;
-            }
-
-            if (contadorChaves == 0) {
-                return true;
             }
 
             else if (contadorChaves < 0) {
@@ -80,12 +74,12 @@ public class Calculadora {
             }
             return false;
         }
-    }
 
     public static void main(String[] args) {
-        String teste = "{ ( 5 + 12 ) + [ ( 10 - 8 ) + 2 ] }";
+        String teste = "{ ( 5 + 12 ) + [ (10 - 8) + 2 ] }";
 
         System.out.println(verificaExpressao(teste));
-    }
-
 }
+}
+
+
