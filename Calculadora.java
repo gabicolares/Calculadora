@@ -42,8 +42,16 @@ public class Calculadora {
                 */
 
                 System.out.println("--- Fim expressao");
-                if(verificaExpressao(teste)){
+                if(verificaExpressao(teste)){ // substituir por try and catch depois para usar exceção
                     StackLinkedList<String> pilha = new StackLinkedList<>();
+                    for (int i = 0; i < v.length; i++){
+                        pilha.push(v[i]);
+                        if (v[i].equals("(") && v[i+1]) {
+                            while( !v[i].equals(")")) {
+                                pilha.pop();
+                            }
+                        }
+                    }
                     //Fazer for para realizar os pushs
                 }
                 else{}
