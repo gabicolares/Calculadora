@@ -1,5 +1,5 @@
 import java.util.EmptyStackException;
-import org.w3c.dom.Node;
+
 
 public class StackLinkedList<E> {
 
