@@ -3,7 +3,14 @@
 
 - [ ] Implementar uma pilha usando estruturas encadeadas.
 - [ ] Implementar a calculadora de expressões aritméticas especificada usando a pilha desenvolvida.
-- [ ] Ler e avaliar as expressões do arquivo fornecido.
+- [x] Ler e avaliar as expressões do arquivo fornecido.
 - [ ] Apresentar o resultado da expressão ou a identificação do erro, e o tamanho máximo da pilha.
 - [ ] Escrever o relatório.
+
+17/10
+
+- [ ] Inserir e tirar da pilha
+- [ ] Calcular e depois inserir resultado
+- [ ] Definir se a pilha é duplamente encadeada
+
  
