@@ -46,11 +46,11 @@ public class App extends Metodos {
                             pilha.push(calcula(op1, operador, op2).toString());
                             System.out.println(calcula(op1, operador, op2).toString());
                             auxP1 = false;
-                            expressao.remove(")");
+                            expressao.remove("(");
                             expressao.remove(op1);
                             expressao.remove(operador);
                             expressao.remove(op2);
-                            expressao.set(expressao.indexOf("("), calcula(op1, operador, op2).toString());
+                            expressao.set(expressao.indexOf(")"), calcula(op1, operador, op2).toString());
                             System.out.println(expressao.toString());
                         }
                     }
@@ -73,25 +73,24 @@ public class App extends Metodos {
                             pilha.push(calcula(op1, operador, op2).toString());
                             System.out.println(calcula(op1, operador, op2).toString());
                             auxCol1 = false;
-                            expressao.remove("]");
+                            expressao.remove("[");
                             expressao.remove(op1);
                             expressao.remove(operador);
                             expressao.remove(op2);
-                            expressao.set(expressao.indexOf("["), calcula(op1, operador, op2).toString());
+                            expressao.set(expressao.indexOf("]"), calcula(op1, operador, op2).toString());
                             System.out.println(expressao.toString());
                         }
                     }
+                    
                     
                     pilha.pop(); // remove o "}"
                     String op2 = pilha.pop();
                     String operador = pilha.pop();
                     String op1 = pilha.pop();
                     pilha.pop(); // remove o "{"
-                    double res = 0;
-                    if (pilha.isEmpty())
-                        res = calcula(op1, operador, op2);
+                    double res = 
+                         calcula(op1, operador, op2);
 
-                    System.out.print("Expressão: ");
                     String exp = "";
                     for (int i = 0; i < expressao.size(); i++) {
                         exp += expressao.get(i) + " ";
