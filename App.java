@@ -51,9 +51,9 @@ public class App extends Metodos {
                             expressao.remove(operador);
                             expressao.remove(op2);
                             expressao.set(expressao.indexOf(")"), calcula(op1, operador, op2).toString());
-                            System.out.println(expressao.toString());
-                        }
+                        
                     }
+                }
                     
                     // Calcula os valores entre colchetes
                     for (int i = 0; i < expressao.size(); i++) {
@@ -73,12 +73,7 @@ public class App extends Metodos {
                             pilha.push(calcula(op1, operador, op2).toString());
                             System.out.println(calcula(op1, operador, op2).toString());
                             auxCol1 = false;
-                            expressao.remove("[");
-                            expressao.remove(op1);
-                            expressao.remove(operador);
-                            expressao.remove(op2);
-                            expressao.set(expressao.indexOf("]"), calcula(op1, operador, op2).toString());
-                            System.out.println(expressao.toString());
+                            
                         }
                     }
                     
@@ -95,11 +90,12 @@ public class App extends Metodos {
                     for (int i = 0; i < expressao.size(); i++) {
                         exp += expressao.get(i) + " ";
                     }
-                    System.out.println("Expressão" + exp);
+                    System.out.println("Expressao" + exp);
                     System.out.printf("Resultado: %.2f\n", res);
                     System.out.printf("Tamanho máximo da pilha: %d\n", tam);
 
                 }
+            }
 
                 else {
                     System.out.print("Erro de sintaxe:");
@@ -107,8 +103,8 @@ public class App extends Metodos {
                 }
             }
             reader.close();
-        } catch (IOException e) {
+        } 
+            catch (IOException e) {
             System.err.format("Erro na leitura do arquivo: ", e);
         }
     }
-}
