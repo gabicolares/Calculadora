@@ -13,24 +13,22 @@ public class StackLinkedList<E> {
     }
     // Atributos da classe Fila (Queue)
     private int count;
-    private Node<E> head;
-    private Node<E> tail;
+    private Node<E> topo;
 
     public StackLinkedList() {
         count = 0;
-        head = null;
-        tail = null;
+        topo = null;
     }
 
     public void push(E element) {
         Node<E> aux = new Node<>(element);
-        Node<E> ant =  head;
+        Node<E> ant =  topo;
 
         if (count == 0) {
-            head = aux;
+            topo = aux;
         }
-        head = aux;
-        head.next = ant;
+        topo = aux;
+        topo.next = ant;
         
         count++;
     }
@@ -39,8 +37,8 @@ public class StackLinkedList<E> {
         if (count == 0) {
             throw new EmptyStackException();
         }
-        E num = head.element;
-        head = head.next;
+        E num = topo.element;
+        topo = topo.next;
         
         return num;
         
@@ -50,7 +48,7 @@ public class StackLinkedList<E> {
         if (count == 0)
             throw new EmptyStackException();
 
-        return head.element;
+        return topo.element;
     }
 
     public int size() {
@@ -62,8 +60,7 @@ public class StackLinkedList<E> {
     }
 
     public  void clear() {
-        head = null;
-        tail = null;
+        topo = null;
         count = 0;
     }
 
