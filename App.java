@@ -46,31 +46,29 @@ public class App extends Metodos {
                             pilha.push(calcula(op1, operador, op2).toString());
                             System.out.println(calcula(op1, operador, op2).toString());
                             auxP1 = false;
-                            expressao.remove("(");
-                            expressao.remove(op1);
-                            expressao.remove(operador);
-                            expressao.remove(op2);
-                            expressao.set(expressao.indexOf(")"), calcula(op1, operador, op2).toString());
                         
                     }
                 }
-                    
+
+                    StackLinkedList <String> pilhaAux = new StackLinkedList<>();
                     // Calcula os valores entre colchetes
-                    for (int i = 0; i < expressao.size(); i++) {
-                        pilha.push(expressao.get(i));
-                        if (expressao.get(i).equals("["))
+                    for (int i = 0; i < pilha.size(); i++) {
+                        String aux = pilha.pop();
+                        pilhaAux.push(aux);
+                        if (aux.equals("]")) {
                             auxCol1 = true;
-                        if (auxCol1 && pilha.top().equals("]")) {
+                        }
+                        if (auxCol1 && pilha.top().equals("[")) {
                             if (tam < pilha.size()) tam = pilha.size();
-                            pilha.pop(); // remove o "]"
-                            String op2 = pilha.pop();
+                            pilhaAux.pop(); // remove o "]"
+                            String op2 = pilhaAux.pop();
                             System.out.println(op2);
-                            String operador = pilha.pop();
+                            String operador = pilhaAux.pop();
                             System.out.println(operador);
-                            String op1 = pilha.pop();
+                            String op1 = pilhaAux.pop();
                             System.out.println(op1);
-                            pilha.pop(); // remove o "["
-                            pilha.push(calcula(op1, operador, op2).toString());
+                            pilhaAux.pop(); // remove o "["
+                            pilhaAux.push(calcula(op1, operador, op2).toString());
                             System.out.println(calcula(op1, operador, op2).toString());
                             auxCol1 = false;
                             
@@ -78,11 +76,11 @@ public class App extends Metodos {
                     }
                     
                     
-                    pilha.pop(); // remove o "}"
-                    String op2 = pilha.pop();
-                    String operador = pilha.pop();
-                    String op1 = pilha.pop();
-                    pilha.pop(); // remove o "{"
+                    pilhaAux.pop(); // remove o "}"
+                    String op2 = pilhaAux.pop();
+                    String operador = pilhaAux.pop();
+                    String op1 = pilhaAux.pop();
+                    pilhaAux.pop(); // remove o "{"
                     double res = 
                          calcula(op1, operador, op2);
 
@@ -95,7 +93,7 @@ public class App extends Metodos {
                     System.out.printf("Tamanho máximo da pilha: %d\n", tam);
 
                 }
-            }
+            
 
                 else {
                     System.out.print("Erro de sintaxe:");
@@ -103,8 +101,10 @@ public class App extends Metodos {
                 }
             }
             reader.close();
-        } 
+         }
+          
             catch (IOException e) {
             System.err.format("Erro na leitura do arquivo: ", e);
         }
     }
+}

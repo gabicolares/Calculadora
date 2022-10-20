@@ -13,6 +13,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class Calculadora {
 
@@ -26,7 +27,10 @@ public class Calculadora {
             while ((line = reader.readLine()) != null) {
                 System.out.println("--- Inicio expressao");
                 String v[] = line.split(" "); // divide a string pelo espaco em branco
-                String expressao[] = v.clone();
+                ArrayList<String> expressao = new ArrayList<>();
+                for (int i = 0; i < v.length; i++) {
+                    expressao.add(v[i]);
+                }
                 System.out.println("--- Fim expressao");
 
                 if (verificaExpressao(expressao)) {
@@ -36,7 +40,7 @@ public class Calculadora {
                     boolean auxCol1 = false;
 
                     // Calcula os valores entre parênteses
-                    for (int i = 0; i < v.length; i++) {
+                    for (int i = 0; i < expressao.size(); i++) {
                         pilha.push(v[i]);
                         if (v[i].equals("("))
                             auxP1 = true;
@@ -45,46 +49,59 @@ public class Calculadora {
                                 tam = pilha.size();
                             pilha.pop(); // remove o ")"
                             String op2 = pilha.pop();
+                            System.out.println(op2);
                             String operador = pilha.pop();
+                            System.out.println(operador);
                             String op1 = pilha.pop();
+                            System.out.println(op1);
                             pilha.pop(); // remove o "("
                             pilha.push(calcula(op1, operador, op2).toString());
-
+                            System.out.println(calcula(op1, operador, op2).toString());
                             auxP1 = false;
+                            expressao.remove("(");
+                            expressao.remove(op1);
+                            expressao.remove(operador);
+                            expressao.remove(op2);
+                            expressao.set(expressao.indexOf(")"), calcula(op1, operador, op2).toString());
+
                         }
                     }
+
                     // Calcula os valores entre colchetes
-                    for (int i = 0; i < v.length; i++) {
-                        pilha.push(v[i]);
-                        if (v[i].equals("["))
+                    for (int i = 0; i < expressao.size(); i++) {
+                        pilha.push(expressao.get(i));
+                        if (expressao.get(i).equals("["))
                             auxCol1 = true;
                         if (auxCol1 && pilha.top().equals("]")) {
                             if (tam < pilha.size())
                                 tam = pilha.size();
                             pilha.pop(); // remove o "]"
                             String op2 = pilha.pop();
+                            System.out.println(op2);
                             String operador = pilha.pop();
+                            System.out.println(operador);
                             String op1 = pilha.pop();
+                            System.out.println(op1);
                             pilha.pop(); // remove o "["
                             pilha.push(calcula(op1, operador, op2).toString());
+                            System.out.println(calcula(op1, operador, op2).toString());
                             auxCol1 = false;
+
                         }
                     }
+
                     pilha.pop(); // remove o "}"
                     String op2 = pilha.pop();
                     String operador = pilha.pop();
                     String op1 = pilha.pop();
                     pilha.pop(); // remove o "{"
-                    double res = 0;
-                    if (pilha.isEmpty())
-                        res = calcula(op1, operador, op2);
+                    double res = calcula(op1, operador, op2);
 
-                    System.out.print("Expressão: ");
                     String exp = "";
-                    for (int i = 0; i < expressao.length; i++) {
-                        exp += expressao[i] + " ";
+                    for (int i = 0; i < expressao.size(); i++) {
+                        exp += expressao.get(i) + " ";
                     }
-                    System.out.println("Expressão" + exp);
+                    System.out.println("Expressao" + exp);
                     System.out.printf("Resultado: %.2f\n", res);
                     System.out.printf("Tamanho máximo da pilha: %d\n", tam);
 
@@ -110,33 +127,33 @@ public class Calculadora {
      *         inválida
      * @version 2022-10-17
      */
-    public static boolean verificaExpressao(String[] expressao) {
+    public static boolean verificaExpressao(ArrayList<String> expressao) {
         int contadorParenteses = 0;
         int contadorChaves = 0;
         int contadorColchetes = 0;
 
-        for (int i = 0; i < expressao.length; i++) {
-            if (expressao[i].equals("(")) {
+        for (int i = 0; i < expressao.size(); i++) {
+            if (expressao.get(i).equals("(")) {
                 contadorParenteses++;
             }
 
-            if (expressao[i].equals(")")) {
+            if (expressao.get(i).equals(")")) {
                 contadorParenteses--;
             }
 
-            if (expressao[i].equals("[")) {
+            if (expressao.get(i).equals("[")) {
                 contadorColchetes++;
             }
 
-            if (expressao[i].equals("]")) {
+            if (expressao.get(i).equals("]")) {
                 contadorColchetes--;
             }
 
-            if (expressao[i].equals("{")) {
+            if (expressao.get(i).equals("{")) {
                 contadorChaves++;
             }
 
-            if (expressao[i].equals("}")) {
+            if (expressao.get(i).equals("}")) {
                 contadorChaves--;
             }
         }
