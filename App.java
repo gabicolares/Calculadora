@@ -16,74 +16,25 @@ public class App extends Metodos {
             while ((line = reader.readLine()) != null) {
                 System.out.println("--- Inicio expressao");
                 String v[] = line.split(" "); // divide a string pelo espaco em branco
-                ArrayList <String> expressao = new ArrayList<>();
+                StackLinkedList<String> pilha = new StackLinkedList<>();
                 for(int i = 0; i<v.length; i++){
-                    expressao.add(v[i]);
+                    if (v[i].equals("}") || v[i].equals("]")  || v[i].equals(")")) {
+                      String op2 = pilha.pop();  
+                      String operador = pilha.pop();
+                      String op1 = pilha.pop();
+                      String abre = pilha.pop();
+                      if (!(v[i].equals("}") && abre.equals("{") || v[i].equals("]") && abre.equals("[")  
+                                                                        || v[i].equals(")") && abre.equals("("))) {
+                        System.out.println("Erro de sintaxe: ");
+                    }
+                    
+                    }
+
+                    else {
+                    pilha.push(v[i]);
+                    }
                 }
                 System.out.println("--- Fim expressao");
-
-                if (verificaExpressao(expressao)) {
-                    StackLinkedList<String> pilha = new StackLinkedList<>();
-                    int tam = pilha.size();
-                    boolean auxP1 = false;
-                    boolean auxCol1 = false;
-
-                    // Calcula os valores entre parênteses
-                    for (int i = 0; i < expressao.size(); i++) {
-                        pilha.push(v[i]);
-                        if (v[i].equals("("))
-                            auxP1 = true;
-                        if (auxP1 && pilha.top().equals(")")) {
-                            if (tam < pilha.size()) tam = pilha.size();
-                            pilha.pop(); // remove o ")"
-                            String op2 = pilha.pop();
-                            System.out.println(op2);
-                            String operador = pilha.pop();
-                            System.out.println(operador);
-                            String op1 = pilha.pop();
-                            System.out.println(op1);
-                            pilha.pop(); // remove o "("
-                            pilha.push(calcula(op1, operador, op2).toString());
-                            System.out.println(calcula(op1, operador, op2).toString());
-                            auxP1 = false;
-                        
-                    }
-                }
-
-                    StackLinkedList <String> pilhaAux = new StackLinkedList<>();
-                    // Calcula os valores entre colchetes
-                    for (int i = 0; i < pilha.size(); i++) {
-                        String aux = pilha.pop();
-                        pilhaAux.push(aux);
-                        if (aux.equals("]")) {
-                            auxCol1 = true;
-                        }
-                        if (auxCol1 && pilha.top().equals("[")) {
-                            if (tam < pilha.size()) tam = pilha.size();
-                            pilhaAux.pop(); // remove o "]"
-                            String op2 = pilhaAux.pop();
-                            System.out.println(op2);
-                            String operador = pilhaAux.pop();
-                            System.out.println(operador);
-                            String op1 = pilhaAux.pop();
-                            System.out.println(op1);
-                            pilhaAux.pop(); // remove o "["
-                            pilhaAux.push(calcula(op1, operador, op2).toString());
-                            System.out.println(calcula(op1, operador, op2).toString());
-                            auxCol1 = false;
-                            
-                        }
-                    }
-                    
-                    
-                    pilhaAux.pop(); // remove o "}"
-                    String op2 = pilhaAux.pop();
-                    String operador = pilhaAux.pop();
-                    String op1 = pilhaAux.pop();
-                    pilhaAux.pop(); // remove o "{"
-                    double res = 
-                         calcula(op1, operador, op2);
-
                     String exp = "";
                     for (int i = 0; i < expressao.size(); i++) {
                         exp += expressao.get(i) + " ";
