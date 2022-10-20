@@ -41,6 +41,7 @@ public class StackLinkedList<E> {
         }
         E num = head.element;
         head = head.next;
+        count--;
         
         return num;
         
