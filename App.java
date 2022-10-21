@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class App extends Metodos {
+public class App {
     public static void main(String args[]) {
         BufferedReader reader;
         Path path1 = Paths.get("expressoes2.txt");
@@ -24,56 +24,54 @@ public class App extends Metodos {
                       String op1 = pilha.pop();
                       String abre = pilha.pop();
                       Double res;
+                      int tamMax = 0;
+                      boolean certo = true;
 
                       if (v[i].equals("}") && !abre.equals("{")){
-                        System.out.println("Erro de Sintaxe: Era esperado \"{\" no lugar de ",abre);
+                        System.out.println("Erro de Sintaxe: Era esperado \"{\" no lugar de "+abre);
                         break; //pula para a próxima expressão
                       }
                       if (v[i].equals("]") && !abre.equals("[")){
-                        System.out.println("Erro de Sintaxe: Era esperado \"[\" no lugar de ",abre);
+                        System.out.println("Erro de Sintaxe: Era esperado \"[\" no lugar de "+abre);
                         break; //pula para a próxima expressão
                       }
                       if (v[i].equals(")") && !abre.equals("(")){
-                        System.out.println("Erro de Sintaxe: Era esperado \"(\" no lugar de ",abre);
+                        System.out.println("Erro de Sintaxe: Era esperado \"(\" no lugar de "+abre);
                         break; //pula para a próxima expressão
                       }
 
                       if (!String.isDigit(op2)){
-                        System.out.println("Erro de Sintaxe: Era esperado um número no lugar de ",op2);
+                        System.out.println("Erro de Sintaxe: Era esperado um número no lugar de "+op2);
                         break; //pula para a próxima expressão
                       }
-                      if (!String.isDigit(op1)){
-                        System.out.println("Erro de Sintaxe: Era esperado um número no lugar de ",op1);
+                      if (!op1.matches("[0-9]+")){
+                        System.out.println("Erro de Sintaxe: Era esperado um número no lugar de "+op1);
                         break; //pula para a próxima expressão
                       }
 
                       switch (operador){
                         case "+": //Soma
                             res = Double.parseDouble(op1) + Double.parseDouble(op2);
-                            Double.toString(res);
-                            v[i] = res; //aponta pro resultado da operação
-                            pilha.push(res); //empilha o resultado na pilha
+                            v[i] = Double.toString(res); //aponta pro resultado da operação
+                            pilha.push(Double.toString(res)); //empilha o resultado na pilha
                             break;
                         case "-": //Subtração
                             res = Double.parseDouble(op1) - Double.parseDouble(op2);
-                            Double.toString(res);
-                            v[i] = res; //aponta pro resultado da operação
-                            pilha.push(res); //empilha o resultado na pilha
+                            v[i] = Double.toString(res); //aponta pro resultado da operação
+                            pilha.push(Double.toString(res)); //empilha o resultado na pilha
                             break;
                         case "*": //Multiplicação
                             res = Double.parseDouble(op1) * Double.parseDouble(op2);
-                            Double.toString(res);
-                            v[i] = res; //aponta pro resultado da operação
-                            pilha.push(res); //empilha o resultado na pilha
+                            v[i] = Double.toString(res); //aponta pro resultado da operação
+                            pilha.push(Double.toString(res)); //empilha o resultado na pilha
                             break;
                         case "^": //Potenciação
                             res = Math.pow(Double.parseDouble(op1),Double.parseDouble(op2));
-                            Double.toString(res);
-                            v[i] = res; //aponta pro resultado da operação
-                            pilha.push(res); //empilha o resultado na pilha
+                            v[i] = Double.toString(res); //aponta pro resultado da operação
+                            pilha.push(Double.toString(res)); //empilha o resultado na pilha
                             break;
                         default:
-                            System.out.println("Erro de Sintaxe: O operador ",operador," não é válido");
+                            System.out.println("Erro de Sintaxe: O operador "+operador+" não é válido");
                             break;
                       }
 
