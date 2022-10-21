@@ -29,39 +29,66 @@ public class App {
             String op1 = pilha.pop();
             String abre = pilha.pop();
             Double res;
+            boolean certo = true;
             
-           // boolean certo = true;
             
+            if (v[i].equals(")") && !abre.equals("(") || abre.equals("(") && !v[i].equals(")")) {
+              System.out.println("Erro de Sintaxe: Era esperado \"(\" no lugar de " + abre);
+              break; // pula para a próxima expressão
+            }
 
+            if (v[i].equals("]") && !abre.equals("[") || abre.equals("[") && !v[i].equals("]")) {
+              System.out.println("Erro de Sintaxe: Era esperado \"[\" no lugar de " + abre);
+              break; // pula para a próxima expressão
+            }
+            
             if (v[i].equals("}") && !abre.equals("{")) {
               System.out.println("Erro de Sintaxe: Era esperado \"{\" no lugar de " + abre);
               break; // pula para a próxima expressão
             }
             
-            if (v[i].equals("]") && !abre.equals("[")) {
-              System.out.println("Erro de Sintaxe: Era esperado \"[\" no lugar de " + abre);
-              break; // pula para a próxima expressão
-            }
+           
             
-            if (v[i].equals(")") && !abre.equals("(")) {
-              System.out.println("Erro de Sintaxe: Era esperado \"(\" no lugar de " + abre);
-              break; // pula para a próxima expressão
-            }
-            
+           
+           /** 
             if (op2.matches("^[0-9]+([,.][0-9]?)?$")) { //problemas no regex [0-9]+ não aceita
                                                               //números negativos nem com virgula
              System.out.println("Erro de Sintaxe: Era esperado um número no lugar de " + op2);
               break; // pula para a próxima expressão
             }
-            if (!op1.matches("^[0-9]+([,.][0-9]?)?$")) { //problemas nesse regex
+           if (!op1.matches("^[0-9]+([,.][0-9]?)?$")) { //problemas nesse regex
               System.out.println("Erro de Sintaxe: Era esperado um número no lugar de " + op1);
               break; // pula para a próxima expressão
             }
+            */
+            try {
+              Double.parseDouble(op2);
+            }
+
+            catch (Exception e) {
+              System.out.println("Erro de sintaxe: Era esperado um numero no lugar de " + op2);
+              certo = false;
+              break;
+
+            }
+
+            try {
+              Double.parseDouble(op1);
+            }
+
+            catch (Exception e) {
+              System.out.println("Erro de sintaxe: Era esperado um numero no lugar de " + op1);
+              certo = false;
+              break;
+
+            }
+
+
 
             switch (operador) {
               case "+": // Soma
                 res = Double.parseDouble(op1) + Double.parseDouble(op2);
-                v[i] = Double.toString(res); // aponta pro resultado da operação
+                //v[i] = Double.toString(res); // aponta pro resultado da operação
                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                 if (abre.equals("{")) {
                   System.out.printf("Resposta: %.2f%n", res);
@@ -69,7 +96,7 @@ public class App {
                 break;
               case "-": // Subtração
                 res = Double.parseDouble(op1) - Double.parseDouble(op2);
-                v[i] = Double.toString(res); // aponta pro resultado da operação
+                //v[i] = Double.toString(res); // aponta pro resultado da operação
                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                 if (abre.equals("{")) {
                   System.out.printf("Resposta: %.2f%n", res);
@@ -77,21 +104,21 @@ public class App {
                 break;
               case "*": // Multiplicação
                 res = Double.parseDouble(op1) * Double.parseDouble(op2);
-                v[i] = Double.toString(res); // aponta pro resultado da operação
+                //v[i] = Double.toString(res); // aponta pro resultado da operação
                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                 if (abre.equals("{")) {
                   System.out.printf("Resposta: %.2f%n", res);
               }
               case "/": // Divisão
                 res = Double.parseDouble(op1) / Double.parseDouble(op2);
-                v[i] = Double.toString(res); // aponta pro resultado da operação
+                //v[i] = Double.toString(res); // aponta pro resultado da operação
                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                 if (abre.equals("{")) {
                   System.out.printf("Resposta: %.2f%n", res);              }
                 break;
               case "^": // Potenciação
                 res = Math.pow(Double.parseDouble(op1), Double.parseDouble(op2));
-                v[i] = Double.toString(res); // aponta pro resultado da operação
+                //v[i] = Double.toString(res); // aponta pro resultado da operação
                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                 if (abre.equals("{")) {
                   System.out.printf("Resposta: %.2f%n", res);              }
@@ -122,7 +149,7 @@ public class App {
       reader.close();
 
     } 
-    catch (IOException e) {
+      catch (IOException e) {
       System.err.format("Erro na leitura do arquivo: ", e);
     }
   }
