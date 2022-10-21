@@ -39,6 +39,7 @@ public class StackLinkedList<E> {
         }
         E num = topo.element;
         topo = topo.next;
+
         count--;
         
         return num;
