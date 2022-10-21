@@ -1,91 +1,224 @@
+
+/**
+ * 
+ * Classe que implementa a calculadora
+ * @author Gabriele Colares Severino
+ * @author João Enrique Cairuga
+ * @version 2022-10-17
+ */
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+
 public class Calculadora {
-    
+
+    public static void main(String[] args) {
+
+        BufferedReader reader;
+        Path path1 = Paths.get("expressoes2.txt");
+        try {
+            reader = Files.newBufferedReader(path1, Charset.defaultCharset());
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                System.out.println("--- Inicio expressao");
+                String v[] = line.split(" "); // divide a string pelo espaco em branco
+                ArrayList<String> expressao = new ArrayList<>();
+                for (int i = 0; i < v.length; i++) {
+                    expressao.add(v[i]);
+                }
+                System.out.println("--- Fim expressao");
+
+                if (verificaExpressao(expressao)) {
+                    StackLinkedList<String> pilha = new StackLinkedList<>();
+                    int tam = pilha.size();
+                    boolean auxP1 = false;
+                    boolean auxCol1 = false;
+
+                    // Calcula os valores entre parênteses
+                    for (int i = 0; i < expressao.size(); i++) {
+                        pilha.push(v[i]);
+                        if (v[i].equals("("))
+                            auxP1 = true;
+                        if (auxP1 && pilha.top().equals(")")) {
+                            if (tam < pilha.size())
+                                tam = pilha.size();
+                            pilha.pop(); // remove o ")"
+                            String op2 = pilha.pop();
+                            System.out.println(op2);
+                            String operador = pilha.pop();
+                            System.out.println(operador);
+                            String op1 = pilha.pop();
+                            System.out.println(op1);
+                            pilha.pop(); // remove o "("
+                            pilha.push(calcula(op1, operador, op2).toString());
+                            System.out.println(calcula(op1, operador, op2).toString());
+                            auxP1 = false;
+                            expressao.remove("(");
+                            expressao.remove(op1);
+                            expressao.remove(operador);
+                            expressao.remove(op2);
+                            expressao.set(expressao.indexOf(")"), calcula(op1, operador, op2).toString());
+
+                        }
+                    }
+
+                    // Calcula os valores entre colchetes
+                    for (int i = 0; i < expressao.size(); i++) {
+                        pilha.push(expressao.get(i));
+                        if (expressao.get(i).equals("["))
+                            auxCol1 = true;
+                        if (auxCol1 && pilha.top().equals("]")) {
+                            if (tam < pilha.size())
+                                tam = pilha.size();
+                            pilha.pop(); // remove o "]"
+                            String op2 = pilha.pop();
+                            System.out.println(op2);
+                            String operador = pilha.pop();
+                            System.out.println(operador);
+                            String op1 = pilha.pop();
+                            System.out.println(op1);
+                            pilha.pop(); // remove o "["
+                            pilha.push(calcula(op1, operador, op2).toString());
+                            System.out.println(calcula(op1, operador, op2).toString());
+                            auxCol1 = false;
+
+                        }
+                    }
+
+                    pilha.pop(); // remove o "}"
+                    String op2 = pilha.pop();
+                    String operador = pilha.pop();
+                    String op1 = pilha.pop();
+                    pilha.pop(); // remove o "{"
+                    double res = calcula(op1, operador, op2);
+
+                    String exp = "";
+                    for (int i = 0; i < expressao.size(); i++) {
+                        exp += expressao.get(i) + " ";
+                    }
+                    System.out.println("Expressao" + exp);
+                    System.out.printf("Resultado: %.2f\n", res);
+                    System.out.printf("Tamanho máximo da pilha: %d\n", tam);
+
+                }
+
+                else {
+                    System.out.print("Erro de sintaxe:");
+                    verificaExpressao(expressao);
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.err.format("Erro na leitura do arquivo: ", e);
+        }
+
+    }
+
     /**
      * Verifica se a expressão passada como parâmetro é válida
+     * 
      * @param expressao a ser analisada
-     * @return true caso ela seja válida e false + mensagem de erro caso seja inválida
+     * @return true caso ela seja válida e false + mensagem de erro caso seja
+     *         inválida
+     * @version 2022-10-17
      */
-    public static boolean verificaExpressao(String expressao) {
+    public static boolean verificaExpressao(ArrayList<String> expressao) {
         int contadorParenteses = 0;
         int contadorChaves = 0;
         int contadorColchetes = 0;
-        String[] separada = expressao.split(" ");
 
-        while (true) {
-            for (int i = 0; i < separada.length; i++) {
-                if (separada[i] == "(") {
-                    contadorParenteses++;
-                }
-                if (separada[i] == ")") {
-                    contadorParenteses--;
-                }
-
-                if (separada[i] == "[") {
-                    contadorColchetes++;
-                }
-
-                if (separada[i] == "]") {
-                    contadorColchetes++;
-                }
-
-                if (separada[i] == "{") {
-                    contadorChaves++;
-                }
-
-                if (separada[i] == "}") {
-                    contadorChaves++;
-                }
+        for (int i = 0; i < expressao.size(); i++) {
+            if (expressao.get(i).equals("(")) {
+                contadorParenteses++;
             }
 
-            if (contadorParenteses == 0) {
-                return true;
+            if (expressao.get(i).equals(")")) {
+                contadorParenteses--;
             }
 
-            else if (contadorParenteses < 0) {
-                System.out.printf("Existe(m) %d fechamento(s) de parênteses sem abertura", contadorParenteses*-1);
-                return false;
+            if (expressao.get(i).equals("[")) {
+                contadorColchetes++;
             }
 
-            else if (contadorParenteses > 0) {
-                System.out.printf("Existe(m) %d abertura(s) de parênteses sem fechamento", contadorParenteses);
-                return false;
+            if (expressao.get(i).equals("]")) {
+                contadorColchetes--;
             }
 
-            if (contadorColchetes == 0) {
-                return true;
+            if (expressao.get(i).equals("{")) {
+                contadorChaves++;
             }
 
-            else if (contadorColchetes < 0) {
-                System.out.printf("Existe(m) %d fechamento(s) de colchetes sem abertura", contadorColchetes*-1);
-                return false;
+            if (expressao.get(i).equals("}")) {
+                contadorChaves--;
             }
+        }
 
-            else if (contadorColchetes > 0) {
-                System.out.printf("Existe(m) %d abertura(s) de colchetes sem fechamento", contadorColchetes);
-                return false;
-            }
+        if (contadorParenteses == 0 && contadorChaves == 0 && contadorColchetes == 0) {
+            return true;
+        }
 
-            if (contadorChaves == 0) {
-                return true;
-            }
-
-            else if (contadorChaves < 0) {
-                System.out.printf("Existe(m) %d fechamento(s) de chaves sem abertura", contadorChaves*-1);
-                return false;
-            }
-
-            else if (contadorChaves > 0) {
-                System.out.printf("Existe(m) %d abertura(s) de chaves sem fechamento", contadorChaves);
-                return false;
-            }
+        else if (contadorParenteses < 0) {
+            System.out.printf("Existe(m) %d fechamento(s) de parênteses sem abertura\n", contadorParenteses * -1);
             return false;
         }
+
+        else if (contadorParenteses > 0) {
+            System.out.printf("Existe(m) %d abertura(s) de parênteses sem fechamento\n", contadorParenteses);
+            return false;
+        }
+
+        else if (contadorColchetes < 0) {
+            System.out.printf("Existe(m) %d fechamento(s) de colchetes sem abertura\n", contadorColchetes * -1);
+            return false;
+        }
+
+        else if (contadorColchetes > 0) {
+            System.out.printf("Existe(m) %d abertura(s) de colchetes sem fechamento\n", contadorColchetes);
+            return false;
+        }
+
+        else if (contadorChaves < 0) {
+            System.out.printf("Existe(m) %d fechamento(s) de chaves sem abertura\n", contadorChaves * -1);
+            return false;
+        }
+
+        else if (contadorChaves > 0) {
+            System.out.printf("Existe(m) %d abertura(s) de chaves sem fechamento\n", contadorChaves);
+            return false;
+        }
+        return false;
     }
 
-    public static void main(String[] args) {
-        String teste = "{ ( 5 + 12 ) + [ ( 10 - 8 ) + 2 ] }";
+    /**
+     *
+     * Método que realiza os cálculos
+     * 
+     * @param x,op,y operando 1, operador, operando 2
+     * @return resultado do cálculo
+     *
+     * @version 2022-10-17
+     */
+    public static Double calcula(String x, String op, String y) {
+        double res = 0;
 
-        System.out.println(verificaExpressao(teste));
+        if (op.equals("+")) {
+            res = Double.parseDouble(x) + Double.parseDouble(y);
+        } else if (op.equals("-")) {
+            res = Double.parseDouble(x) - Double.parseDouble(y);
+        } else if (op.equals("*")) {
+            res = Double.parseDouble(x) * Double.parseDouble(y);
+        } else if (op.equals("/")) {
+            res = Double.parseDouble(x) / Double.parseDouble(y);
+        } else if (op.equals("^")) {
+            res = Math.pow(Double.parseDouble(x), Double.parseDouble(y));
+        }
+
+        return res;
     }
 
 }
