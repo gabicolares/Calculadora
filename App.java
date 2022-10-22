@@ -20,8 +20,10 @@ public class App {
         for (int i = 0; i < v.length; i++) {
           System.out.print(v[i] + " ");
         }
+
         System.out.printf("%n %n");
-        int tamMax = pilha.size();
+        int tamMax = pilha.size(); //inicia com o valor da pilha vazia (0)
+
         for (int i = 0; i < v.length; i++) {
           if (v[i].equals("}") || v[i].equals("]") || v[i].equals(")")) {
             String op2 = pilha.pop();
@@ -31,36 +33,13 @@ public class App {
             Double res;
             boolean certo = true;
             
-            
-            if (v[i].equals(")") && !abre.equals("(") || abre.equals("(") && !v[i].equals(")")) {
-              System.out.println("Erro de Sintaxe: Era esperado \"(\" no lugar de " + abre);
-              break; // pula para a próxima expressão
-            }
-
-            if (v[i].equals("]") && !abre.equals("[") || abre.equals("[") && !v[i].equals("]")) {
-              System.out.println("Erro de Sintaxe: Era esperado \"[\" no lugar de " + abre);
+            //Testa se há erro nos pares de abre e fecha
+            if (v[i].equals(")") && !abre.equals("(") || v[i].equals("]") && !abre.equals("[") ||v[i].equals("}") && !abre.equals("{")) {
+              System.out.println("Erro de Sintaxe: Erro nos pares de abre e fecha");
               break; // pula para a próxima expressão
             }
             
-            if (v[i].equals("}") && !abre.equals("{")) {
-              System.out.println("Erro de Sintaxe: Era esperado \"{\" no lugar de " + abre);
-              break; // pula para a próxima expressão
-            }
-            
-           
-            
-           
-           /** 
-            if (op2.matches("^[0-9]+([,.][0-9]?)?$")) { //problemas no regex [0-9]+ não aceita
-                                                              //números negativos nem com virgula
-             System.out.println("Erro de Sintaxe: Era esperado um número no lugar de " + op2);
-              break; // pula para a próxima expressão
-            }
-           if (!op1.matches("^[0-9]+([,.][0-9]?)?$")) { //problemas nesse regex
-              System.out.println("Erro de Sintaxe: Era esperado um número no lugar de " + op1);
-              break; // pula para a próxima expressão
-            }
-            */
+            //testa se os valores armazenados nos operandos são números
             try {
               Double.parseDouble(op2);
             }
@@ -68,7 +47,7 @@ public class App {
             catch (Exception e) {
               System.out.println("Erro de sintaxe: Era esperado um numero no lugar de " + op2);
               certo = false;
-              break;
+              break; // pula para a próxima expressão
 
             }
 
@@ -79,51 +58,51 @@ public class App {
             catch (Exception e) {
               System.out.println("Erro de sintaxe: Era esperado um numero no lugar de " + op1);
               certo = false;
-              break;
+              break; // pula para a próxima expressão
 
             }
 
-
-
+            //Testa se o valor do operador representa uma operação matemática válida
             switch (operador) {
               case "+": // Soma
                 res = Double.parseDouble(op1) + Double.parseDouble(op2);
-                //v[i] = Double.toString(res); // aponta pro resultado da operação
                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                 if (abre.equals("{")) {
                   System.out.printf("Resposta: %.2f%n", res);
-              }
-                break;
+                }
+              break;
               case "-": // Subtração
                 res = Double.parseDouble(op1) - Double.parseDouble(op2);
                 //v[i] = Double.toString(res); // aponta pro resultado da operação
                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                 if (abre.equals("{")) {
                   System.out.printf("Resposta: %.2f%n", res);
-              }
-                break;
+                }
+              break;
               case "*": // Multiplicação
                 res = Double.parseDouble(op1) * Double.parseDouble(op2);
                 //v[i] = Double.toString(res); // aponta pro resultado da operação
                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                 if (abre.equals("{")) {
                   System.out.printf("Resposta: %.2f%n", res);
-              }
+                }
+              break;
               case "/": // Divisão
                 res = Double.parseDouble(op1) / Double.parseDouble(op2);
                 //v[i] = Double.toString(res); // aponta pro resultado da operação
                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                 if (abre.equals("{")) {
-                  System.out.printf("Resposta: %.2f%n", res);              }
-                break;
+                  System.out.printf("Resposta: %.2f%n", res);
+                }
+              break;
               case "^": // Potenciação
                 res = Math.pow(Double.parseDouble(op1), Double.parseDouble(op2));
                 //v[i] = Double.toString(res); // aponta pro resultado da operação
                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                 if (abre.equals("{")) {
-                  System.out.printf("Resposta: %.2f%n", res);              }
-                break;
-
+                  System.out.printf("Resposta: %.2f%n", res);  
+                }
+              break;
               default:
                 System.out.println("Erro de Sintaxe: O operador " + operador + " não é válido");
                 break;
@@ -135,7 +114,7 @@ public class App {
           else {
             pilha.push(v[i]);
           }
-
+          //Checa se a pilha está maior do que o valor máximo anterior
           if (tamMax < pilha.size()) {
             tamMax = pilha.size();
         }
