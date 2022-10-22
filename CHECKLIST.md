@@ -4,7 +4,8 @@
 - [x] Implementar uma pilha usando estruturas encadeadas.
 - [x] Implementar a calculadora de expressões aritméticas especificada usando a pilha desenvolvida.
 - [x] Ler e avaliar as expressões do arquivo fornecido.
-- [ ] Apresentar o resultado da expressão ou a identificação do erro, e o tamanho máximo da pilha.
+- [x] Apresentar o resultado da expressão ou a identificação do erro, e o tamanho máximo da pilha.
+- [ ] Confirmar se ta tudo certo
 - [ ] Escrever o relatório.
 
 17/10
