@@ -1,7 +1,7 @@
 import java.util.EmptyStackException;
 
 
-public class StackLinkedList<E> {
+public class StackLinked<E> {
 
     private class Node <T> {
         public T element;
@@ -15,7 +15,7 @@ public class StackLinkedList<E> {
     private int count;
     private Node<E> topo;
 
-    public StackLinkedList() {
+    public StackLinked() {
         count = 0;
         topo = null;
     }

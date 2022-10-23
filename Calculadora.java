@@ -25,7 +25,7 @@ public class Calculadora {
             while ((line = reader.readLine()) != null) {
 
                 String v[] = line.split(" "); // divide a string pelo espaco em branco
-                StackLinkedList<String> pilha = new StackLinkedList<>();
+                StackLinked<String> pilha = new StackLinked<>();
                 System.out.print("Expressao: ");
                 for (int i = 0; i < v.length; i++) {
                     System.out.print(v[i] + " ");
