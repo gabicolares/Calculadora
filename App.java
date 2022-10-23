@@ -14,15 +14,17 @@ public class App {
       reader = Files.newBufferedReader(path1, Charset.defaultCharset());
       String line = null;
       while ((line = reader.readLine()) != null) {
-        System.out.println("--- Inicio expressao");
+        
         String v[] = line.split(" "); // divide a string pelo espaco em branco
         StackLinkedList<String> pilha = new StackLinkedList<>();
+        System.out.print("Expressao: ");
         for (int i = 0; i < v.length; i++) {
           System.out.print(v[i] + " ");
         }
 
         System.out.printf("%n %n");
         int tamMax = pilha.size(); //inicia com o valor da pilha vazia (0)
+        boolean certo = true; //controla o print do tamanho da pilha
 
         for (int i = 0; i < v.length; i++) {
           if (v[i].equals("}") || v[i].equals("]") || v[i].equals(")")) {
@@ -31,21 +33,14 @@ public class App {
             String op1 = pilha.pop();
             String abre = pilha.pop();
             Double res;
-            boolean certo = true;
             
-            //Testa se há erro nos pares de abre e fecha
-            if (v[i].equals(")") && !abre.equals("(") || v[i].equals("]") && !abre.equals("[") ||v[i].equals("}") && !abre.equals("{")) {
-              System.out.println("Erro de Sintaxe: Erro nos pares de abre e fecha");
-              break; // pula para a próxima expressão
-            }
             
-            //testa se os valores armazenados nos operandos são números
             try {
               Double.parseDouble(op2);
             }
 
             catch (Exception e) {
-              System.out.println("Erro de sintaxe: Era esperado um numero no lugar de " + op2);
+              System.out.println("Erro de sintaxe: Era esperado um numero depois de " + op2);
               certo = false;
               break; // pula para a próxima expressão
 
@@ -56,10 +51,16 @@ public class App {
             }
 
             catch (Exception e) {
-              System.out.println("Erro de sintaxe: Era esperado um numero no lugar de " + op1);
+              System.out.println("Erro de sintaxe: Era esperado um numero depois de " + op1);
               certo = false;
               break; // pula para a próxima expressão
 
+            }
+            //Testa se há erro nos pares de abre e fecha
+            if (v[i].equals(")") && !abre.equals("(") || v[i].equals("]") && !abre.equals("[") ||v[i].equals("}") && !abre.equals("{")) {
+              System.out.println("Erro de Sintaxe: Erro nos pares de abre e fecha");
+              certo = false;
+              break; // pula para a próxima expressão
             }
 
             //Testa se o valor do operador representa uma operação matemática válida
@@ -120,10 +121,13 @@ public class App {
         }
         
         }
-        System.out.println("Tamanho máximo da pilha: " + tamMax);
+        if (certo == true) {
+        System.out.printf("Tamanho máximo da pilha: %d\n---------------------------------------------------------------------\n", tamMax);
       }
-
-      System.out.println("--- Fim expressao");
+      else {
+        System.out.printf("---------------------------------------------------------------------\n");
+      }
+    }
 
       reader.close();
 
