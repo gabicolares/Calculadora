@@ -11,7 +11,7 @@ public class StackLinked<E> {
             next = null;
         }
     }
-    // Atributos da classe Fila (Queue)
+    // Atributos da classe
     private int count;
     private Node<E> topo;
 
@@ -20,6 +20,10 @@ public class StackLinked<E> {
         topo = null;
     }
 
+    /**
+     * Adiciona um elemento ao topo da pilha
+     * @param element elemento a ser adicionado
+     */
     public void push(E element) {
         Node<E> aux = new Node<>(element);
         Node<E> ant =  topo;
@@ -33,6 +37,10 @@ public class StackLinked<E> {
         count++;
     }
 
+    /**
+     * Retorna e remove o elemento do topo da pilha
+     * @return o elemento do topo da pilha
+     */
     public E pop() {
         if (count == 0) {
             throw new EmptyStackException();
@@ -45,6 +53,10 @@ public class StackLinked<E> {
         
     }
 
+    /**
+     * Retorna o elemento do topo da pilha
+     * @return o elemento do topo da pilha
+     */
     public E top() {
         if (count == 0)
             throw new EmptyStackException();
@@ -52,14 +64,25 @@ public class StackLinked<E> {
         return topo.element;
     }
 
+    /**
+     * Retorna o tamanho da pilha
+     * @return o tamanho
+     */
     public int size() {
         return count;
     }
 
+    /**
+     * Verifica se a pilha está vazia
+     * @return true se estiver fazia e false se tiver elementos
+     */
     public boolean isEmpty() {
         return count == 0;
     }
 
+    /**
+     * Limpa a pilha e a deixa sem elementos
+     */
     public  void clear() {
         topo = null;
         count = 0;
