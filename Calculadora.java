@@ -4,7 +4,7 @@
  * Classe que implementa a calculadora
  * @author Gabriele Colares Severino
  * @author João Enrique Cairuga
- * @version 2022-10-17
+ * @version 2022-10-21
  */
 
 import java.io.BufferedReader;
