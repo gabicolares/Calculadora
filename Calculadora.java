@@ -44,7 +44,7 @@ public class Calculadora {
                         Double res;
 
                         try {
-                            Double.parseDouble(op2);
+                            Double.parseDouble(op2); // verifica se op2 pode ser convertido para double
                         }
 
                         catch (Exception e) {
@@ -59,7 +59,7 @@ public class Calculadora {
                         }
 
                         catch (Exception e) {
-                            System.out.println("Erro de sintaxe: Era esperado um numero depois de " + op1);
+                            System.out.println("Erro de sintaxe: Era esperado um numero depois de " + op1); // verifica se op1 pode ser convertido para double
                             certo = false;
                             break; // pula para a próxima expressão
 
@@ -72,7 +72,7 @@ public class Calculadora {
                             break; // pula para a próxima expressão
                         }
 
-                        // Testa se o valor do operador representa uma operação matemática válida
+                        // Testa se o valor do operador representa uma operação matemática válida e, se for, a realiza
                         switch (operador) {
                             case "+": // Soma
                                 res = Double.parseDouble(op1) + Double.parseDouble(op2);
@@ -83,7 +83,6 @@ public class Calculadora {
                                 break;
                             case "-": // Subtração
                                 res = Double.parseDouble(op1) - Double.parseDouble(op2);
-                                // v[i] = Double.toString(res); // aponta pro resultado da operação
                                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                                 if (abre.equals("{")) {
                                     System.out.printf("Resposta: %.2f%n", res);
@@ -91,7 +90,6 @@ public class Calculadora {
                                 break;
                             case "*": // Multiplicação
                                 res = Double.parseDouble(op1) * Double.parseDouble(op2);
-                                // v[i] = Double.toString(res); // aponta pro resultado da operação
                                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                                 if (abre.equals("{")) {
                                     System.out.printf("Resposta: %.2f%n", res);
@@ -99,7 +97,6 @@ public class Calculadora {
                                 break;
                             case "/": // Divisão
                                 res = Double.parseDouble(op1) / Double.parseDouble(op2);
-                                // v[i] = Double.toString(res); // aponta pro resultado da operação
                                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                                 if (abre.equals("{")) {
                                     System.out.printf("Resposta: %.2f%n", res);
@@ -107,7 +104,6 @@ public class Calculadora {
                                 break;
                             case "^": // Potenciação
                                 res = Math.pow(Double.parseDouble(op1), Double.parseDouble(op2));
-                                // v[i] = Double.toString(res); // aponta pro resultado da operação
                                 pilha.push(Double.toString(res)); // empilha o resultado na pilha
                                 if (abre.equals("{")) {
                                     System.out.printf("Resposta: %.2f%n", res);
@@ -121,7 +117,7 @@ public class Calculadora {
                     }
 
                     else {
-                        pilha.push(v[i]);
+                        pilha.push(v[i]); // adiciona elementos na pilha
                     }
                     // Checa se a pilha está maior do que o valor máximo anterior
                     if (tamMax < pilha.size()) {
